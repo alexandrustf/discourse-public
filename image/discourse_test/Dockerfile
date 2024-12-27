@@ -31,7 +31,7 @@ FROM with_browsers AS release
 
 RUN cd /var/www/discourse &&\
     sudo -u discourse bundle install --jobs $(($(nproc) - 1)) &&\
-    sudo -E -u discourse -H /bin/bash -c 'if [ -f yarn.lock ]; then (yarn install && yarn cache clean); else CI=1 pnpm install; fi'
+    sudo -E -u discourse -H /bin/bash -c 'if [ -f yarn.lock ]; then (yarn install --network-timeout 600000 && yarn cache clean); else CI=1 pnpm install; fi'
 
 RUN cd /var/www/discourse && sudo -E -u discourse -H bundle exec rake plugin:install_all_official &&\
     LOAD_PLUGINS=1 sudo -E -u discourse -H bundle exec rake plugin:install_all_gems &&\

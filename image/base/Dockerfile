@@ -172,4 +172,4 @@ RUN cd /var/www/discourse &&\
     find /var/www/discourse/vendor/bundle -name tmp -type d -exec rm -rf {} +
 
 RUN cd /var/www/discourse &&\
-    sudo -u discourse /bin/bash -c 'if [ -f yarn.lock ]; then yarn install --frozen-lockfile && yarn cache clean; else pnpm install --frozen-lockfile; fi'
+    sudo -u discourse /bin/bash -c 'if [ -f yarn.lock ]; then yarn install --network-timeout 600000 --frozen-lockfile && yarn cache clean; else pnpm install --frozen-lockfile; fi'
